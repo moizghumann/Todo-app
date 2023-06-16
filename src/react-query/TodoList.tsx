@@ -23,12 +23,13 @@ const TodoList = () => {
     queryKey: ['todos'],
     // queryFn is like a special instruction that tells the magical source how to find the information you want. It's like a map that guides the magical source to the right place.
     queryFn: fetchToDos
-  })
+  });
 
   // if (error) return <p>{error}</p>;
 
   return (
     <ul className="list-group">
+      {/* todos can be undefined, thus the optional question mark */}
       {todos?.map((todo) => (
         <li key={todo.id} className="list-group-item">
           {todo.title}
