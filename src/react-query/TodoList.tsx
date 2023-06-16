@@ -1,5 +1,5 @@
-import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import useToDos from './hooks/useToDos';
 
 interface Todo {
   id: number;
@@ -12,22 +12,14 @@ const endpoint = 'https://jsonplaceholder.typicode.com/';
 
 const TodoList = () => {
 
-  const fetchToDos = () =>
-    axios
-      .get<Todo[]>(endpoint + 'todos')
-      .then(res => res.data)
+  const { data: todos, isLoading, error } = useToDos()
 
-  // useQuery is used to ask the magical source to find something specific. 
-  const { data: todos } = useQuery({
-    // queryKey is used to define what specific thing we need from magical source
-    queryKey: ['todos'],
-    // queryFn is like a special instruction that tells the magical source how to find the information you want. It's like a map that guides the magical source to the right place.
-    queryFn: fetchToDos
-  });
+  if (isLoading) return <p>Loading..</p>
 
-  // if (error) return <p>{error}</p>;
+  if (error) return <p>{error.message}</p>;
 
   return (
+
     <ul className="list-group">
       {/* todos can be undefined, thus the optional question mark */}
       {todos?.map((todo) => (
