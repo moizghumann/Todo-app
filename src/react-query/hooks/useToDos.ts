@@ -23,7 +23,9 @@ const useToDos = () => {
         // queryKey is used to define what specific thing we need from magical source
         queryKey: ['todos'],
         // queryFn is like a special instruction that tells the magical source how to find the information you want. It's like a map that guides the magical source to the right place.
-        queryFn: fetchToDos
+        queryFn: fetchToDos,
+        // we can customise query's behaviour in useQuery hook as well
+        staleTime: 5 * 1000
     });
 }
 
