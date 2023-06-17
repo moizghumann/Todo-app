@@ -1,11 +1,12 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import usePost from './hooks/usePost';
+import usePosts from './hooks/usePosts';
+import usePost from './hooks/usePosts';
 
 
 const PostList = () => {
 
-  const { data: posts, isLoading, error } = usePost();
+  const { data: posts, isLoading, error } = usePosts();
 
   if (isLoading) return <h2>Loading Posts..</h2>
 
@@ -14,7 +15,7 @@ const PostList = () => {
 
   return (
     <ul className="list-group">
-      {posts.map((post) => (
+      {posts?.map((post) => (
         <li key={post.id} className="list-group-item">
           {post.title}
         </li>

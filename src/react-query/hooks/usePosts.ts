@@ -10,7 +10,7 @@ interface Post {
 
 const endpoint = 'https://jsonplaceholder.typicode.com/';
 
-const usePost = () => {
+const usePosts = () => {
 
     // queryfunc to fetch the posts endpoint from api
     const fetchPost = () =>
@@ -24,4 +24,4 @@ const usePost = () => {
 
 }
 
-export default usePost
+export default usePosts
