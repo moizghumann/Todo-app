@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useState } from 'react';
 import useToDos from './hooks/useToDos';
 
 interface Todo {
@@ -19,16 +20,18 @@ const TodoList = () => {
   if (error) return <p>{error.message}</p>;
 
   return (
-
-    <ul className="list-group">
-      {/* todos can be undefined, thus the optional question mark */}
-      {todos?.map((todo) => (
-        <li key={todo.id} className="list-group-item">
-          {todo.title}
-        </li>
-      ))}
-    </ul>
+    <>
+      <ul className="list-group">
+        {/* todos can be undefined, thus the optional question mark */}
+        {todos?.map((todo) => (
+          <li key={todo.id} className="list-group-item">
+            {todo.title}
+          </li>
+        ))}
+      </ul>
+    </>
   );
 };
+
 
 export default TodoList;
