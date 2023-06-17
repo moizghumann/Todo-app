@@ -1,25 +1,16 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import usePost from './hooks/usePost';
 
-interface Post {
-  id: number;
-  title: string;
-  body: string;
-  userId: number;
-}
 
 const PostList = () => {
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [error, setError] = useState('');
 
-  useEffect(() => {
-    axios
-      .get('https://jsonplaceholder.typicode.com/posts')
-      .then((res) => setPosts(res.data))
-      .catch((error) => setError(error));
-  }, []);
+  const { data: posts, isLoading, error } = usePost();
 
-  if (error) return <p>{error}</p>;
+  if (isLoading) return <h2>Loading Posts..</h2>
+
+  if (error) return <h2>{error.message}</h2>
+
 
   return (
     <ul className="list-group">
