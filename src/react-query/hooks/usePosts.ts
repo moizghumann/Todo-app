@@ -8,11 +8,15 @@ interface Post {
     userId: number;
 }
 
+interface PageQuery {
+    page: number,
+    pageSize: number
+}
+
 const endpoint = 'https://jsonplaceholder.typicode.com/';
 
 // parameterized queries - Filtering data based on specific parameters in queries.
-
-const usePosts = (userId: number | undefined) => {
+const usePosts = (query: PageQuery) => {
 
     // queryfunc to fetch the posts endpoint from api
     const fetchPost = () =>
@@ -20,15 +24,17 @@ const usePosts = (userId: number | undefined) => {
         // - In this case, we are passing a `userId` parameter to filter the posts by a specific user
         axios.get<Post[]>(endpoint + 'posts', {
             params: {
-                userId
+                _page: query.page,
+                _pageSize: query.pageSize
             }
         })
             .then(res => res.data)
 
     // Use the useQuery hook to manage the data fetching and caching
     return useQuery<Post[], Error>({
-        queryKey: ['users', userId, 'posts'],  // The query key identifies this specific query
-        queryFn: fetchPost  // The function to fetch the data
+        queryKey: ['posts', query],  // The query key identifies this specific query
+        queryFn: fetchPost,  // The function to fetch the data
+        keepPreviousData: true  // our page shows previous existing query while the new one is being fetched
     })
 
 }

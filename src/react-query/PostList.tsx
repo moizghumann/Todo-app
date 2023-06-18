@@ -3,9 +3,10 @@ import usePosts from './hooks/usePosts';
 
 const PostList = () => {
 
-  const [userId, setUserId] = useState<number>()
+  const pageSize = 10;
+  const [page, setPage] = useState(1);
 
-  const { data: posts, isLoading, error } = usePosts(userId);
+  const { data: posts, isLoading, error } = usePosts({ page, pageSize });
 
   if (isLoading) return <h2>Loading Posts..</h2>
 
@@ -14,15 +15,6 @@ const PostList = () => {
 
   return (
     <>
-      <select className="form-select mb-3"
-        value={userId} // so the right option gets selected in the next render
-        onChange={(event) =>
-          setUserId(parseInt(event.target.value))} >
-        <option selected value=''>Select Users</option>
-        <option value="1">User 1</option>
-        <option value="2">User 2</option>
-        <option value="3">User 3</option>
-      </select>
 
       <ul className="list-group">
         {posts?.map((post) => (
@@ -31,6 +23,19 @@ const PostList = () => {
           </li>
         ))}
       </ul>
+
+      <div className="div my-3">
+
+        <button className="btn btn-primary"
+          disabled={page === 1}
+          onClick={() => setPage((page) => page - 1)}>Previous</button>
+
+        <button className="btn btn-primary ms-2"
+          disabled={page === 10}
+          onClick={() => setPage((page) => page + 1)}>Next</button>
+      </div>
+
+      <p>{`Page: ${page}`}</p>
     </>
   );
 };
