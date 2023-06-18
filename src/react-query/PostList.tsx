@@ -16,7 +16,9 @@ const PostList = () => {
     <>
 
       <ul className="list-group">
+        {/*The pages property contains an array of pages, where each page is an array of items. */}
         {posts.pages.map((post, index) => (
+          // The purpose of using <React.Fragment> is to avoid adding an unnecessary extra element to the DOM.
           <React.Fragment key={index}>
             {post.map(item =>
               <li key={item.id}
