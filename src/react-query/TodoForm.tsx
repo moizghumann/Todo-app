@@ -16,12 +16,14 @@ const TodoForm = () => {
         // Extract the response data from the API response
         .then(res => res.data),
 
-    // The success callback that will be executed after the mutation is successful
+    // The onSuccess callback is called after the mutation is successfully executed.
+    // To access the result of a mutation and perform additional actions, you can use the onSuccess callback
     onSuccess: (newTodo) => {
-      // Update the 'todos' data in the query client cache
+      // Update the 'todos' data in the query client cache by passing the query key -> ['todos] and the updated data -> [newTodo, ...(todos || [])] to the setQueryData function.
       queryClient.setQueryData<Todo[]>(['todos'], todos => [newTodo, ...(todos || [])])
     }
   });
+
 
   const ref = useRef<HTMLInputElement>(null);
 
@@ -29,7 +31,10 @@ const TodoForm = () => {
     <form className="row mb-3" onSubmit={(event) => {
       event.preventDefault();
 
+      // checking if the input exists, if truthy, only then the mutation is triggered
       if (ref.current && ref.current.value)
+        // triggering the mutation with mutate method
+        // its argument should be the data you want to send to the server for the mutation.
         addTodo.mutate({
           id: 0,
           userId: 1,
