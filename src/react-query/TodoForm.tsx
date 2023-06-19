@@ -4,10 +4,12 @@ import { useRef } from 'react';
 import { endpoint, Todo } from './TodoList';
 
 const TodoForm = () => {
-
+  // this queryClient instance of useQueryClient hook is responsible for interacting with the cache and perform cache updates after a successful mutation.
   const queryClient = useQueryClient();
 
-  const addTodo = useMutation({
+  // Declare a new mutation using the `useMutation` hook.
+  // The mutation is defined with generic types to specify the data types of the mutation result, error, and inputs
+  const addTodo = useMutation<Todo, Error, Todo>({
     // The mutation function that will be called when adding a new todo
     mutationFn: (todo: Todo) =>
       // Send a POST request to the server to create a new todo
@@ -24,31 +26,38 @@ const TodoForm = () => {
     }
   });
 
-
   const ref = useRef<HTMLInputElement>(null);
 
   return (
-    <form className="row mb-3" onSubmit={(event) => {
-      event.preventDefault();
+    <>
+      {addTodo.error && (
+        <div className="alert alert-danger">
+          {addTodo.error.message}
+        </div>
 
-      // checking if the input exists, if truthy, only then the mutation is triggered
-      if (ref.current && ref.current.value)
-        // triggering the mutation with mutate method
-        // its argument should be the data you want to send to the server for the mutation.
-        addTodo.mutate({
-          id: 0,
-          userId: 1,
-          completed: false,
-          title: ref.current?.value
-        })
-    }}>
-      <div className="col">
-        <input ref={ref} type="text" className="form-control" />
-      </div>
-      <div className="col">
-        <button className="btn btn-primary">Add</button>
-      </div>
-    </form>
+      )}
+      <form className="row mb-3" onSubmit={(event) => {
+        event.preventDefault();
+
+        // checking if the input exists, if truthy, only then the mutation is triggered
+        if (ref.current && ref.current.value)
+          // triggering the mutation with mutate method
+          // its argument should be the data you want to send to the server for the mutation.
+          addTodo.mutate({
+            id: 0,
+            userId: 1,
+            completed: false,
+            title: ref.current?.value
+          })
+      }}>
+        <div className="col">
+          <input ref={ref} type="text" className="form-control" />
+        </div>
+        <div className="col">
+          <button className="btn btn-primary">Add</button>
+        </div>
+      </form>
+    </>
   );
 };
 
