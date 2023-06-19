@@ -13,7 +13,7 @@ export const endpoint = 'https://jsonplaceholder.typicode.com/' as const
 
 const TodoList = () => {
 
-  const { data: todos, isLoading, error } = useToDos()
+  const { data: todos, isLoading, error } = useToDos();
 
   if (isLoading) return <p>Loading..</p>
 

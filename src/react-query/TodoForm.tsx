@@ -56,7 +56,8 @@ const TodoForm = () => {
           <button className="btn btn-primary">Add</button>
         </div>
       </form>
-      );
+    </>
+  )
 };
 
-      export default TodoForm;
+export default TodoForm

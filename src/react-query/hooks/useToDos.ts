@@ -1,14 +1,16 @@
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-interface Todo {
+export interface Todo {
     id: number;
     title: string;
     userId: number;
     completed: boolean;
 }
 
-const endpoint = 'https://jsonplaceholder.typicode.com/';
+
+export const endpoint = 'https://jsonplaceholder.typicode.com/' as const
+
 
 const useToDos = () => {
 
@@ -25,8 +27,11 @@ const useToDos = () => {
         // queryFn is like a special instruction that tells the magical source how to find the information you want. It's like a map that guides the magical source to the right place.
         queryFn: fetchToDos,
         // we can customise query's behaviour in useQuery hook as well
-        staleTime: 5 * 1000
+        staleTime: 5 * 1000,
+        keepPreviousData: true,
+
     });
+    // only refetch the first pa
 }
 
 export default useToDos
