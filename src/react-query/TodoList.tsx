@@ -2,14 +2,6 @@ import axios from 'axios';
 import { useState } from 'react';
 import useToDos from './hooks/useToDos';
 
-export interface Todo {
-  id: number;
-  title: string;
-  userId: number;
-  completed: boolean;
-}
-
-export const endpoint = 'https://jsonplaceholder.typicode.com/' as const
 
 const TodoList = () => {
 

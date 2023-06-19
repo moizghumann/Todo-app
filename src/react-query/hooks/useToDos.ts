@@ -8,16 +8,15 @@ export interface Todo {
     completed: boolean;
 }
 
-
 export const endpoint = 'https://jsonplaceholder.typicode.com/' as const
+
+const fetchToDos = () =>
+    axios
+        .get<Todo[]>(endpoint + 'todos')
+        .then(res => res.data)
 
 
 const useToDos = () => {
-
-    const fetchToDos = () =>
-        axios
-            .get<Todo[]>(endpoint + 'todos')
-            .then(res => res.data)
     // no catch here because we are handling error with useQuery
 
     // useQuery is used to ask the magical source to find something specific.
@@ -31,7 +30,6 @@ const useToDos = () => {
         keepPreviousData: true,
 
     });
-    // only refetch the first pa
 }
 
 export default useToDos
