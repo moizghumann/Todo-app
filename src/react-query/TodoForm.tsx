@@ -18,10 +18,9 @@ const TodoForm = () => {
         // Extract the response data from the API response
         .then(res => res.data),
 
-    // The onSuccess callback is called after the mutation is successfully executed.
-    // To access the result of a mutation and perform additional actions, you can use the onSuccess callback
+    // The success callback that will be executed after the mutation is successful
     onSuccess: (newTodo) => {
-      // Update the 'todos' data in the query client cache by passing the query key -> ['todos] and the updated data -> [newTodo, ...(todos || [])] to the setQueryData function.
+      // Update the 'todos' data in the query client cache
       queryClient.setQueryData<Todo[]>(['todos'], todos => [newTodo, ...(todos || [])])
     }
   });
@@ -57,8 +56,7 @@ const TodoForm = () => {
           <button className="btn btn-primary">Add</button>
         </div>
       </form>
-    </>
-  );
+      );
 };
 
-export default TodoForm;
+      export default TodoForm;
