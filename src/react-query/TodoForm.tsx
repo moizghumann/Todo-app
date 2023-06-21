@@ -1,33 +1,15 @@
-import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
 import { useRef } from 'react';
-import { endpoint, Todo } from './hooks/useToDos';
+import useAddTodo from './hooks/useAddTodos';
+
+
 
 const TodoForm = () => {
-  // this queryClient instance of useQueryClient hook is responsible for interacting with the cache and perform cache updates after a successful mutation.
-  const queryClient = useQueryClient();
-
-  // Declare a mutation using the `useMutation` hook.
-  // The mutation is defined with generic types to specify the data types of the mutation result, error, and inputs(data that we send to the backend)
-  const addTodo = useMutation<Todo, Error, Todo>({
-    // The mutation function that will be called when adding a new todo
-    mutationFn: (todo: Todo) =>
-      // Send a POST request to the server to create a new todo
-      axios
-        .post<Todo>(endpoint + 'todos', todo)
-        // Extract the response data from the API response
-        .then(res => res.data),
-
-    // The success callback that will be executed after the mutation is successful
-    onSuccess: (newTodo) => {
-      // Update the 'todos' data in the query client cache
-      queryClient.setQueryData<Todo[]>(['todos'], todos => [newTodo, ...(todos || [])]);
-
-      if (ref.current) return ref.current.value = '';
-    }
-  });
 
   const ref = useRef<HTMLInputElement>(null);
+
+  const addTodo = useAddTodo(() => {
+    if (ref.current) return ref.current.value = '';
+  });
 
   return (
     <>
@@ -54,14 +36,17 @@ const TodoForm = () => {
         <div className="col">
           <input ref={ref} type="text" className="form-control" />
         </div>
+
         <div className="col">
+
           <button className="btn btn-primary">
             {addTodo.isLoading ?
-              <div className="spinner-border spinner-border-sm" role="status" aria-setsize={2}>
+              <div className="spinner-border spinner-border-sm" role="status">
                 <span className="sr-only"></span>
               </div> :
               'Add'}
           </button>
+
         </div>
       </form>
     </>
@@ -69,3 +54,9 @@ const TodoForm = () => {
 };
 
 export default TodoForm
+
+// Wait for a short delay to allow the cache to be updated
+      // await new Promise(resolve => setTimeout(resolve, 100));
+
+      // // Refetch the 'todos' query to update the cache with the latest data from the server
+      // queryClient.refetchQueries(['todos']);

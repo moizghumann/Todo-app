@@ -1,5 +1,6 @@
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import CACHE_TODO_KEY from "../constants";
 
 export interface Todo {
     id: number;
@@ -22,7 +23,7 @@ const useToDos = () => {
     // useQuery is used to ask the magical source to find something specific.
     return useQuery<Todo[], Error>({
         // queryKey is used to define what specific thing we need from magical source
-        queryKey: ['todos'],
+        queryKey: CACHE_TODO_KEY,
         // queryFn is like a special instruction that tells the magical source how to find the information you want. It's like a map that guides the magical source to the right place.
         queryFn: fetchToDos,
         // we can customise query's behaviour in useQuery hook as well
