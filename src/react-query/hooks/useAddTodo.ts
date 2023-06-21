@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
+import todoService, { Todo } from "../services/todoService";
 import CACHE_TODO_KEY from "../constants";
-import { endpoint, Todo } from "./useToDos";
 
 
 interface AddTodoContext {
@@ -14,20 +13,11 @@ const useAddTodo = (onAdd: () => void) => {
     const queryClient = useQueryClient();
 
     // Declare a mutation using the `useMutation` hook.
-
     return useMutation<Todo, Error, Todo, AddTodoContext>({
         // The mutation function that will be called when adding a new todo
-        mutationFn: (todo: Todo) =>
-            // Send a POST request to the server to create a new todo
-            axios
-                .post<Todo>(endpoint + 'todos', todo)
-                // Extract the response data from the API response
-                .then(res => {
-                    console.log('response data:', res);
-                    return res.data
-                }),
+        mutationFn: todoService.post,
 
-        onMutate: (newTodo) => {
+        onMutate: (newTodo: Todo) => {
 
 
             const previousTodos = queryClient.getQueryData<Todo[]>(CACHE_TODO_KEY) || [];
@@ -53,11 +43,9 @@ const useAddTodo = (onAdd: () => void) => {
         onSuccess: (savedTodo, newTodo) => {
 
             queryClient.setQueryData<Todo[]>(CACHE_TODO_KEY, todos =>
-
-            (todos?.map(todo => (
-                todo === newTodo ? savedTodo : todo
-            )))
-            );
+                todos?.map((todo =>
+                    todo === newTodo ? savedTodo : todo))
+            )
 
             onAdd();
         }
