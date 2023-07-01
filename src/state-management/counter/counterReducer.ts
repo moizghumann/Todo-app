@@ -1,5 +1,5 @@
 
-// Actions are plain JavaScript objects that describe the type of state update you want to perform.
+// actions are plain JavaScript objects that describe the type of state update you want to perform.
 interface Action {
     type: 'INCREMENT' | 'RESET';
 }
