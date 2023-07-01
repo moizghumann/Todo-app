@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { mountStoreDevtool } from 'simple-zustand-devtools'
 
 interface AuthStore {
     user: string;
@@ -12,5 +13,10 @@ const useAuthStore = create<AuthStore>(set => ({
     login: username => set(() => ({ user: username })),
     logout: () => set(() => ({ user: '' }))
 }))
+
+// checking to see if we are in development mode
+if (process.env.NODE_ENV === 'development')
+    // first parameter is the name of devtools, second parameter is our store hook
+    mountStoreDevtool('Current Store', useAuthStore)
 
 export default useAuthStore;
