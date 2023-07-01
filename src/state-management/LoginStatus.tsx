@@ -1,9 +1,7 @@
-import { useContext, useReducer } from "react";
-import loginStatusReducer from "./reducers/loginStatusReducer";
-import { AuthContext } from "./context/authContext";
+import useAuth from "./hooks/useAuth";
 
 const LoginStatus = () => {
-  const context = useContext(AuthContext);
+  const context = useAuth();
 
   return (
     <div>

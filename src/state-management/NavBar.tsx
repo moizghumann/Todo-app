@@ -3,9 +3,10 @@ import LoginStatus from './LoginStatus';
 import { TasksContext } from './context/taskContext';
 import loginStatusReducer from './reducers/loginStatusReducer';
 import { AuthContext } from './context/authContext';
+import useTasks from './hooks/useTasks';
 
 const NavBar = () => {
-  const { tasks } = useContext(TasksContext)
+  const { tasks } = useTasks();
 
   return (
     <nav className="navbar d-flex justify-content-between">
