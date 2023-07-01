@@ -1,24 +1,24 @@
-import { useState } from "react";
+import { useContext, useReducer } from "react";
+import loginStatusReducer from "./reducers/loginStatusReducer";
+import { AuthContext } from "./context/authContext";
 
 const LoginStatus = () => {
-  const [user, setUser] = useState('');
+  const context = useContext(AuthContext);
 
-  if (user)
-    return (
-      <>
-        <div>
-          <span className="mx-2">{user}</span>
-          <a onClick={() => setUser('')} href="#">
-            Logout
-          </a>
-        </div>
-      </>
-    );
   return (
     <div>
-      <a onClick={() => setUser('mosh.hamedani')} href="#">
-        Login
-      </a>
+      {(context.user) ?
+        <div>
+          <span className="mx-2">{context.user}</span>
+          <a onClick={() => context.dispatch({ type: 'LOGOUT' })} href="#">
+            Logout
+          </a>
+        </div> :
+        <a onClick={() => context.dispatch({ type: 'LOGIN', username: 'moiz ghuman' })} href="#">
+          Login
+        </a>
+      }
+
     </div>
   );
 };

@@ -1,23 +1,26 @@
-import { useReducer } from 'react';
-import taskReducer from './reducers/taskReducer';
+import { useContext, useReducer } from 'react';
+import { TasksContext } from './context/taskContext';
+import { AuthContext } from './context/authContext';
 
 
 const TaskList = () => {
-  // const [tasks, setTasks] = useState<Task[]>([]);
-  const [tasks, dispatch] = useReducer(taskReducer, []);
+  // accessing the context value
+  const context = useContext(TasksContext);
+  const { user } = useContext(AuthContext)
 
   return (
     <>
+      {user ? <h5>User: {user}</h5> : <h5>User is not logged in!</h5>}
       <button
         onClick={() =>
-          dispatch({ type: 'ADD' })
+          context.dispatch({ type: 'ADD' })
         }
         className="btn btn-primary my-3"
       >
         Add Task
       </button>
       <ul className="list-group">
-        {tasks.map((task) => (
+        {context.tasks.map((task) => (
           <li
             key={task.id}
             className="list-group-item d-flex justify-content-between align-items-center"
@@ -26,7 +29,7 @@ const TaskList = () => {
             <button
               className="btn btn-outline-danger"
               onClick={() =>
-                dispatch({ type: 'DELETE', id: task.id })
+                context.dispatch({ type: 'DELETE', id: task.id })
               }
             >
               Delete
