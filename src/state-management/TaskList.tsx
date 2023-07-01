@@ -1,11 +1,12 @@
-import useAuth from './auth/useAuth';
+import useAuthStore from './auth/authStore';
 import useTasks from './hooks/useTasks';
 
 
 const TaskList = () => {
   // accessing the context value
-  const { tasks, dispatch } = useTasks()
-  const { user } = useAuth();
+  const { tasks, dispatch } = useTasks();
+  //const { user } = useAuth();
+  const { user } = useAuthStore();
 
   return (
     <>
