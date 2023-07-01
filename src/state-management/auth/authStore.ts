@@ -17,6 +17,6 @@ const useAuthStore = create<AuthStore>(set => ({
 // checking to see if we are in development mode
 if (process.env.NODE_ENV === 'development')
     // first parameter is the name of devtools, second parameter is our store hook
-    mountStoreDevtool('Current Store', useAuthStore)
+    mountStoreDevtool('Auth Store', useAuthStore)
 
 export default useAuthStore;
