@@ -10,7 +10,7 @@ const UserListPage = () => {
     <ul className="list-group">
       {users.map((user) => (
         <li className="list-group-item" key={user.id}>
-          <Link to={'/userdetail'}>
+          <Link to={`/users/${user.id}`}>
             {user.name}
           </Link>
           {/* <a href="userdetail">{user.name}</a> */}
