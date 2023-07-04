@@ -5,6 +5,7 @@ import Layout from "./Layout";
 import UserPageList from "./UserPageList";
 import UserDetail from "./UserDetail";
 import ErrorPage from "./ErrorPage";
+import LoginPage from "./LoginPage";
 
 const router = createBrowserRouter([
     {
@@ -14,6 +15,7 @@ const router = createBrowserRouter([
         children: [
             // remember, the path of children should be in accordance with their parent's path
             { path: '', element: <HomePage /> },
+            { path: '/login', element: <LoginPage /> },
             {
                 path: 'users',
                 element: <UserPageList />,
