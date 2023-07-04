@@ -21,7 +21,7 @@ const router = createBrowserRouter([
                 element: <UserPageList />,
                 children: [
                     // we dont need 'users/:id here since its parent path is users
-                    { path: ':id', element: <UserDetail /> }
+                    { path: ':id', element: <UserDetail /> },
                 ]
             },
 
