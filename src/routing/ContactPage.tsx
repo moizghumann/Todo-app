@@ -7,6 +7,7 @@ const ContactPage = () => {
       onSubmit={(event) => {
         event.preventDefault();
         // Redirect the user to the home page
+        // navigate makes the component impure, thus should only be used inside effects and event handlers
         navigate('/')
       }}
     >
