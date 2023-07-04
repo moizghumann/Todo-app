@@ -4,17 +4,9 @@ import useLogStore from './useLogStore'
 
 const UserPageList = () => {
 
-    const { username, password } = useLogStore((state) => ({
-        username: state.username,
-        password: state.password,
-    }));
-
 
     const { logout } = useLogStore();
-    console.log(username, password);
     // if user doesnt exist
-    if (username != 'moizghuman' || password != 'bigbang123')
-        return <Navigate to={'/login'} />
 
     return (
         <div>
