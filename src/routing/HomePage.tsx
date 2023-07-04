@@ -1,4 +1,5 @@
 const HomePage = () => {
+  throw new Error('fuck')
   return (
     <>
       <p>
